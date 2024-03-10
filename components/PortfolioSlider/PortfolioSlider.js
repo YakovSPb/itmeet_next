@@ -10,41 +10,53 @@ export default function PortfolioSlider() {
     };
 
     const handleNextClick = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === cases.length - 1 ? prevIndex : prevIndex + 1));
+        setCurrentIndex((prevIndex) => (prevIndex === portfolio.length - 1 ? prevIndex : prevIndex + 1));
     };
 
     return (
-        <div className={"container slider"}>
-            <Carousel
-                showArrows={true}
-                showThumbs={false}
-                infiniteLoop={true}
-                dynamicHeight={false}
-                renderThumbs={() => {}} // Пустая функция для отключения миниатюр
-                showIndicators={false}
-                showStatus={false} // Отключение отображения статуса
-                centerMode={true} // Режим центрального слайда
-                selectedItem={currentIndex}
-                stopOnHover={false}
-                centerSlidePercentage={33.3333} // Размер центрального слайда в процентах
-            >
-                {portfolio.map((item) => (
-                    <div key={item.id} className="portfolio_item">
-                        <div className="portfolio_item__img"><a
-                            href={item.img}
-                            data-fancybox="gallery"><img
-                            src={item.thumb}
-                            alt={item.name}/></a></div>
-                        <div className="portfolio_item__feedback">{item.feedback}
+        <div className="portfolio portfolio_slider">
+            <h2 className="h2">Мое портфолио</h2>
+            <div className="desc">отзывы клиентов</div>
+            <div className="container">
+                <div className="portfolio_items wow animate__animated animate__slideInUp">
+                    <div className={"container slider"}>
+                        <Carousel
+                            showArrows={true}
+                            showThumbs={false}
+                            infiniteLoop={true}
+                            dynamicHeight={false}
+                            renderThumbs={() => {
+                            }} // Пустая функция для отключения миниатюр
+                            showIndicators={false}
+                            showStatus={false} // Отключение отображения статуса
+                            centerMode={true} // Режим центрального слайда
+                            selectedItem={currentIndex}
+                            stopOnHover={false}
+                            centerSlidePercentage={33.3333} // Размер центрального слайда в процентах
+                        >
+                            {portfolio.map((item) => (
+                                <div key={item.id} className="portfolio_item">
+                                    <div className="portfolio_item__img"><a
+                                        href={item.img}
+                                        data-fancybox="gallery"><img
+                                        src={item.thumb}
+                                        alt={item.name}/></a></div>
+                                    <div className="portfolio_item__feedback">{item.feedback}
+                                    </div>
+                                    <div className="portfolio_item__name">{item.name}</div>
+                                </div>
+                            ))}
+                        </Carousel>
+                        <div className="y_prevArrow slick-arrow" onClick={handlePrevClick}><i
+                            className="fa fa-angle-left"></i>
                         </div>
-                        <div className="portfolio_item__name">{item.name}</div>
+                        <div className="y_nextArrow slick-arrow" onClick={handleNextClick}><i
+                            className="fa fa-angle-right"></i>
+                        </div>
                     </div>
-                ))}
-            </Carousel>
-            <div className="y_prevArrow slick-arrow" onClick={handlePrevClick}><i className="fa fa-angle-left"></i>
-            </div>
-            <div className="y_nextArrow slick-arrow" onClick={handleNextClick}><i className="fa fa-angle-right"></i>
+                </div>
             </div>
         </div>
+
     );
 }

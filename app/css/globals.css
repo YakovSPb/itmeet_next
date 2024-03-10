@@ -30,7 +30,3 @@
 .myblog_item__img{
     height: 300px;
 }
-
-.myblog_item{
-    width: calc(100% - 30px)!important;
-}

@@ -3,7 +3,7 @@ import Header from "@/components/Header/Header";
 import CasesSlider from "@/components/CasesSlider/CasesSlider";
 import Footer from "@/components/Footer/Footer";
 import PortfolioSlider from "@/components/PortfolioSlider/PortfolioSlider";
-import BlogSlider from "@/components/BlogSlider/BlogSlider";
+import MyBlog from "@/components/MyBlog/MyBlog";
 
 export default function Home() {
     return <div>
@@ -214,28 +214,9 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-
-                <div className="cases sect_padd">
-                    <h2 className="h2">Выберите подходящий тариф</h2>
-                    <div className="desc">Пришло время найти ваш стиль</div>
-                    <CasesSlider/>
-                    <div className="container text-center">
-                        <a href="#"
-                           className="btn btn--red fancybox"
-                           data-from="Главная тарифы">Заказать</a>
-                    </div>
-                </div>
-
-                <div className="portfolio portfolio_slider">
-                    <h2 className="h2">Мое портфолио</h2>
-                    <div className="desc">отзывы клиентов</div>
-                    <div className="container">
-                        <div className="portfolio_items wow animate__animated animate__slideInUp">
-                            <PortfolioSlider/>
-                        </div>
-                    </div>
-                </div>
-                    <BlogSlider/>
+                <CasesSlider/>
+                <PortfolioSlider/>
+                <MyBlog/>
             </div>
         </div>
         <Footer/>
