@@ -1,7 +1,6 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import "./css/globals.css";
+import "./css/styles.min.css"
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,7 +10,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
