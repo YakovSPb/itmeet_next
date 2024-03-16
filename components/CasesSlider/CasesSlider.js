@@ -2,7 +2,7 @@ import { Carousel } from "react-responsive-carousel";
 import {items} from "../../public/Items.json";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {useState} from "react";
-export default function CasesSlider() {
+export default function CasesSlider({openModal}) {
     const { cases } = items;
     const [currentIndex, setCurrentIndex] = useState(0);
     const handlePrevClick = () => {
@@ -23,8 +23,6 @@ export default function CasesSlider() {
                     showThumbs={false}
                     infiniteLoop={true}
                     dynamicHeight={false}
-                    renderThumbs={() => {
-                    }} // Пустая функция для отключения миниатюр
                     showIndicators={false}
                     showStatus={false} // Отключение отображения статуса
                     centerMode={true} // Режим центрального слайда
@@ -56,9 +54,10 @@ export default function CasesSlider() {
                 </div>
             </div>
             <div className="container text-center">
-                <a href="#"
-                   className="btn btn--red fancybox"
-                   data-from="Главная тарифы">Заказать</a>
+                <div
+                   onClick={openModal}
+                   className="btn btn--red"
+                   data-from="Главная тарифы">Заказать</div>
             </div>
         </div>
     );

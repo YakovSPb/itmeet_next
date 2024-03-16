@@ -30,3 +30,18 @@
 .myblog_item__img{
     height: 300px;
 }
+.portfolio_item{
+    cursor: pointer;
+}
+
+.slick-arrow{
+    z-index: 1000!important;
+}
+
+.modal_close{
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 30px;
+}

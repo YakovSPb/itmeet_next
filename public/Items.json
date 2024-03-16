@@ -152,21 +152,21 @@
       {
         "id": 13,
         "thumb": "/portfolio/portfolio_13s.jpg",
-        "img": "/portfolio/portfolio_13-scaled.jpg",
+        "img": "/portfolio/portfolio_13.jpg",
         "feedback": "\"Спасибо! Было очень приятно поработать))\"",
         "name": "Сергей"
       },
       {
         "id": 14,
         "thumb": "/portfolio/portfolio_14s.jpg",
-        "img": "/portfolio/portfolio_14-scaled.jpg",
+        "img": "/portfolio/portfolio_14.jpg",
         "feedback": "\"Благодарю, за продуктивное сотрудничество. Вся работа была сделана качественно и в срок, даже с учетом доработок!\"",
         "name": "Евгений"
       },
       {
         "id": 15,
         "thumb": "/portfolio/portfolio_15s.jpg",
-        "img": "/portfolio/portfolio_15-scaled.jpg",
+        "img": "/portfolio/portfolio_15.jpg",
         "feedback": "\"Яков после того, как взялся за задачу сделал все быстро, четко, без лишних вопросов. Спасибо.\"",
         "name": "Александр"
       },
@@ -180,7 +180,7 @@
       {
         "id": 17,
         "thumb": "/portfolio/portfolio_17s.jpg",
-        "img": "/portfolio/portfolio_17-scaled.jpg",
+        "img": "/portfolio/portfolio_17.jpg",
         "feedback": "\"Яков и его команда прекрасно справились с задачей, проявили себя как умелые и ответственные исполнители!\"",
         "name": "Александр"
       }

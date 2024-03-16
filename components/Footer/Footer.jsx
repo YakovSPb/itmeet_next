@@ -1,6 +1,9 @@
+"use client"
 import React from 'react'
+import {useModal} from "../Modal/ModalProvider";
 
 const Footer = () => {
+    const { openModal } = useModal();
     return (
         <footer className="footer">
             <div className="container">
@@ -32,13 +35,13 @@ const Footer = () => {
                                     href="/services/">Услуги и цены</a></li>
                                 <li id="menu-item-204"
                                     className="menu-item menu-item-type-post_type menu-item-object-page menu-item-204">
-                                    <a href="https://prospekt.pro/my-portfolio/">Портфолио</a></li>
+                                    <a href="#">Портфолио</a></li>
                                 <li id="menu-item-304"
                                     className="menu-item menu-item-type-post_type menu-item-object-page menu-item-304">
-                                    <a href="https://prospekt.pro/about/">О нас</a></li>
+                                    <a href="#">О нас</a></li>
                                 <li id="menu-item-305"
                                     className="menu-item menu-item-type-post_type menu-item-object-page menu-item-305">
-                                    <a href="https://prospekt.pro/contacts/">Контакты</a></li>
+                                    <a href="#">Контакты</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -66,9 +69,10 @@ const Footer = () => {
                                 <a className="social__link"
                                    href="#" target="_blank"></a>
                             </div>
-                            <a href="#"
-                               className="btn btn--red footer__btn fancybox"
-                               data-from="Футер оставить заявку">Оставить заявку</a>
+                            <div
+                               onClick={openModal}
+                               className="btn btn--red footer__btn"
+                               data-from="Футер оставить заявку">Оставить заявку</div>
                         </div>
                     </div>
                 </div>

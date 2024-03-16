@@ -1,13 +1,15 @@
 "use client"
-import Header from "@/components/Header/Header";
 import CasesSlider from "@/components/CasesSlider/CasesSlider";
-import Footer from "@/components/Footer/Footer";
 import PortfolioSlider from "@/components/PortfolioSlider/PortfolioSlider";
 import MyBlog from "@/components/MyBlog/MyBlog";
+import useWowInit from "../hooks/useWowInit";
+import {useModal} from "../components/Modal/ModalProvider";
 
 export default function Home() {
+    useWowInit()
+    const { openModal } = useModal();
+
     return <div>
-        <Header/>
         <div className="wrapper">
             <div className="main">
                 <div className="promo">
@@ -16,9 +18,7 @@ export default function Home() {
                         <div className="promo_info__title"><h1 className="h1">Разработка сайтов и приложений на React и
                             Node.js</h1></div>
                         <div className="promo_info__desc">Продвижение и поддержка сайтов</div>
-                        <a href="#"
-                           className="fancybox btn promo_info__btn"
-                           data-from="Главная промо">Связаться</a>
+                        <dev onClick={openModal} className="btn promo_info__btn">Связаться</dev>
                     </div>
                 </div>
 
@@ -158,9 +158,10 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="container text-center">
-                        <a href="#"
-                           className="btn btn--red team__btn fancybox"
-                           data-from="Главная команда фрилансеров">Заказать услугу</a>
+                        <div
+                           onClick={openModal}
+                           className="btn btn--red team__btn"
+                           data-from="Главная команда фрилансеров">Заказать услугу</div>
                     </div>
                 </div>
 
@@ -214,11 +215,10 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <CasesSlider/>
-                <PortfolioSlider/>
+                <CasesSlider openModal={openModal}/>
+                <PortfolioSlider />
                 <MyBlog/>
             </div>
         </div>
-        <Footer/>
     </div>;
 }
