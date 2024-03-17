@@ -48,13 +48,43 @@ export default function PortfolioSlider() {
         }
     };
 
+    const [centerSlidePercentage, setCenterSlidePercentage] = useState(33.3333)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [itemsWidth, setItemsWidth] = useState('100%')
+
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
+    useEffect(() => {
+        if (windowWidth > 1110 && windowWidth < 1200) {
+            setCenterSlidePercentage(50);
+        }
+        else if(windowWidth < 1110){
+            setCenterSlidePercentage(100);
+            setItemsWidth(windowWidth + 'px')
+        }
+        else {
+            setItemsWidth('100%')
+            setCenterSlidePercentage(33.3333);
+        }
+    }, [windowWidth]);
+
+    useEffect(() => {
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     return (
         <div className="portfolio portfolio_slider">
             <h2 className="h2">Мое портфолио</h2>
             <div className="desc">отзывы клиентов</div>
             <div className="container">
-                <div className="portfolio_items wow animate__animated animate__slideInUp">
-                    <div className={"container slider"}>
+                <div style={{position: 'relative'}} className="portfolio_items wow animate__animated animate__slideInUp">
+                    <div className={"container"}>
                         <Carousel
                             showArrows={true}
                             showThumbs={false}
@@ -67,12 +97,13 @@ export default function PortfolioSlider() {
                             centerMode={true} // Режим центрального слайда
                             selectedItem={currentIndex}
                             stopOnHover={false}
-                            centerSlidePercentage={33.3333} // Размер центрального слайда в процентах
+                            centerSlidePercentage={centerSlidePercentage} // Размер центрального слайда в процентах
                         >
                             {portfolio.map((item, index) => (
                                 <div key={item.id}
-                                     onClick={(event) => handleItemClick(index,event)}
-                                     className="portfolio_item">
+                                     style={{width: itemsWidth}}
+                                     onClick={(event) => handleItemClick(index, event)}
+                                     className={"portfolio_item"}>
                                     <div className="portfolio_item__img">
                                         <img
                                             src={item.img}
@@ -97,12 +128,12 @@ export default function PortfolioSlider() {
                                 imageHeight={imageSize.height} // Высота изображения
                             />
                         )}
-                        <div className="y_prevArrow slick-arrow" onClick={handlePrevClick}><i
-                            className="fa fa-angle-left"></i>
-                        </div>
-                        <div className="y_nextArrow slick-arrow" onClick={handleNextClick}><i
-                            className="fa fa-angle-right"></i>
-                        </div>
+                    </div>
+                    <div className="y_prevArrow slick-arrow" onClick={handlePrevClick}><i
+                        className="fa fa-angle-left"></i>
+                    </div>
+                    <div className="y_nextArrow slick-arrow" onClick={handleNextClick}><i
+                        className="fa fa-angle-right"></i>
                     </div>
                 </div>
             </div>

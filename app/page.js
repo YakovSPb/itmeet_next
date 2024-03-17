@@ -18,7 +18,7 @@ export default function Home() {
                         <div className="promo_info__title"><h1 className="h1">Разработка сайтов и приложений на React и
                             Node.js</h1></div>
                         <div className="promo_info__desc">Продвижение и поддержка сайтов</div>
-                        <dev onClick={openModal} className="btn promo_info__btn">Связаться</dev>
+                        <div onClick={openModal} className="btn promo_info__btn">Связаться</div>
                     </div>
                 </div>
 

@@ -1,31 +1,25 @@
+"use client"
 import React from 'react'
-
+import {items} from "../../public/Items.json";
+import {useState} from "react";
+import clsx from "clsx"
 const Header = () => {
+    const {links} = items
+    const [toggleMenu, setToggleMenu] = useState(false)
     return (
         <header className="header">
             <div className="container">
                 <div className="header_wrapper">
                     <div className="logo"><a href="/public" className="logo">IT</a>
                     </div>
-
-
-                    <nav className="menu header__menu">
-                        <ul id="primary-menu" className="menu__list">
-                            <li id="menu-item-196"
-                                className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-17 current_page_item menu-item-196">
-                                <a href="#" aria-current="page">Главная</a></li>
-                            <li id="menu-item-199"
-                                className="menu-item menu-item-type-custom menu-item-object-custom menu-item-199"><a
-                                href="#">Услуги и цены</a></li>
-                            <li id="menu-item-197"
-                                className="menu-item menu-item-type-post_type menu-item-object-page menu-item-197"><a
-                                href="#">Портфолио</a></li>
-                            <li id="menu-item-307"
-                                className="menu-item menu-item-type-post_type menu-item-object-page menu-item-307"><a
-                                href="#">О нас</a></li>
-                            <li id="menu-item-353"
-                                className="menu-item menu-item-type-post_type menu-item-object-page menu-item-353"><a
-                                href="#">Контакты</a></li>
+                    <nav className={clsx("menu header__menu",toggleMenu && 'header__menu--active')}>
+                        <ul
+                            className="menu__list">
+                            {links.map(link=> (
+                                <li key={link.id}
+                                    className="menu-item">
+                                    <a href={link.path} aria-current="page">{link.label}</a></li>
+                            ))}
                         </ul>
                     </nav>
 
@@ -49,9 +43,9 @@ const Header = () => {
                         </div>
                     </div>
 
-                    <a href="#" className="hamburger hamburger--emphatic">
+                    <div onClick={()=>setToggleMenu(!toggleMenu)} className={clsx("hamburger hamburger--emphatic", toggleMenu && 'is-active')}>
                         <span className="hamburger-box"><span className="hamburger-inner"></span></span>
-                    </a>
+                    </div>
 
                 </div>
             </div>

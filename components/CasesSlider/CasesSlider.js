@@ -2,9 +2,12 @@ import { Carousel } from "react-responsive-carousel";
 import {items} from "../../public/Items.json";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {useState} from "react";
+import {useEffect} from "react";
 export default function CasesSlider({openModal}) {
     const { cases } = items;
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [centerSlidePercentage, setCenterSlidePercentage] = useState(33.3333)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const handlePrevClick = () => {
         setCurrentIndex((prevIndex) => (prevIndex === 0 ? 0 : prevIndex - 1));
     };
@@ -13,12 +16,36 @@ export default function CasesSlider({openModal}) {
         setCurrentIndex((prevIndex) => (prevIndex === cases.length - 1 ? prevIndex : prevIndex + 1));
     };
 
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
+    useEffect(() => {
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (windowWidth > 779 && windowWidth < 1200) {
+            setCenterSlidePercentage(50);
+        } else if(windowWidth < 780){
+            setCenterSlidePercentage(100);
+        }
+        else {
+            setCenterSlidePercentage(33.3333);
+        }
+    }, [windowWidth]);
+
     return (
         <div className="cases sect_padd">
             <h2 className="h2">Выберите подходящий тариф</h2>
             <div className="desc">Пришло время найти ваш стиль</div>
             <div className={"container slider"}>
                 <Carousel
+                    key={currentIndex}
                     showArrows={true}
                     showThumbs={false}
                     infiniteLoop={true}
@@ -28,7 +55,7 @@ export default function CasesSlider({openModal}) {
                     centerMode={true} // Режим центрального слайда
                     selectedItem={currentIndex}
                     stopOnHover={false}
-                    centerSlidePercentage={33.3333} // Размер центрального слайда в процентах
+                    centerSlidePercentage={centerSlidePercentage} // Размер центрального слайда в процентах
                 >
                     {cases.map((item) => (
                         <div key={item.id} className="cases_items_inner">

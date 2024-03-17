@@ -8,9 +8,6 @@ const FormModal = () => {
     return (
         <CustomModal isOpen={modalIsOpen} closeModal={closeModal}>
                 <div role="form" className="wpcf7" id="wpcf7-f5-o1" lang="ru-RU" dir="ltr">
-                    <div className="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p>
-                        <ul></ul>
-                    </div>
                     <form action="/services/lending/#wpcf7-f5-o1" method="post"
                           className="wpcf7-form init form contact__form popup-form callback zoom-anim-dialog"
                           novalidate="novalidate" data-status="init">

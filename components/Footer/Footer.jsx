@@ -1,8 +1,9 @@
 "use client"
 import React from 'react'
 import {useModal} from "../Modal/ModalProvider";
-
+import {items} from "../../public/Items.json";
 const Footer = () => {
+    const {links} = items
     const { openModal } = useModal();
     return (
         <footer className="footer">
@@ -26,22 +27,13 @@ const Footer = () => {
 
                     <div className="footer_menu">
                         <nav className="menu footer__menu">
-                            <ul id="footer-menu" className="menu__list">
-                                <li id="menu-item-202"
-                                    className="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-202">
-                                    <a href="/public" aria-current="page">Главная</a></li>
-                                <li id="menu-item-203"
-                                    className="menu-item menu-item-type-custom menu-item-object-custom menu-item-203"><a
-                                    href="/services/">Услуги и цены</a></li>
-                                <li id="menu-item-204"
-                                    className="menu-item menu-item-type-post_type menu-item-object-page menu-item-204">
-                                    <a href="#">Портфолио</a></li>
-                                <li id="menu-item-304"
-                                    className="menu-item menu-item-type-post_type menu-item-object-page menu-item-304">
-                                    <a href="#">О нас</a></li>
-                                <li id="menu-item-305"
-                                    className="menu-item menu-item-type-post_type menu-item-object-page menu-item-305">
-                                    <a href="#">Контакты</a></li>
+                            <ul className="menu__list">
+                                {links.map(link=> (
+                                    <li
+                                        key={link.id}
+                                        className="menu-item">
+                                        <a href={link.path} aria-current="page">{link.label}</a></li>
+                                ))}
                             </ul>
                         </nav>
                     </div>
