@@ -1,10 +1,39 @@
 import { Carousel } from "react-responsive-carousel";
-import {items} from "../../public/Items.json";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {useState} from "react";
 import {useEffect} from "react";
 export default function CasesSlider({openModal}) {
-    const { cases } = items;
+    const cases = [
+        {
+            "id": 1,
+            "title": "Лендинг (Langing page)",
+            "desc": "Мощный креатив",
+            "price": "25 000 р.",
+            "lists": ["Индивидуальный дизайн", "Адаптивная версия", "Домен .ru и хостинг (1 год)", "Система управления WordPress", "10-12 блоков, настройка плагинов"]
+        },
+        {
+            "id": 2,
+            "title": "Корпоративный сайт",
+            "desc": "Продающий бизнес",
+            "price": "45 000 р.",
+            "lists": ["Индивидуальный дизайн", "Базовая SEO Оптимизация", "Домен .ru и хостинг (1 год)", "Система управления WordPress", "Неограниченное кол-во страниц"]
+        },
+        {
+            "id": 3,
+            "title": "Интернет магазин",
+            "desc": "Высокие онлайн продажи",
+            "price": "65 000 р.",
+            "lists": ["Уникальный дизайн", "Базовая SEO Оптимизация", "Домен .ru и хостинг (1 год)", "WordPress WooCommerce", "Неограниченное кол-во страниц"]
+        },
+        {
+            "id": 4,
+            "title": "Сайт визитка",
+            "desc": "Мощный креатив",
+            "price": "25 000 р.",
+            "lists": ["Индивидуальный дизайн", "Адаптивная версия", "Домен .ru и хостинг (1 год)", "Система управления WordPress", "10-12 блоков, настройка плагинов"]
+        }
+    ]
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [centerSlidePercentage, setCenterSlidePercentage] = useState(33.3333)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);

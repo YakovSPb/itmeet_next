@@ -1,9 +1,13 @@
 "use client"
-import useWowInit from "../../hooks/useWowInit";
 import 'react-image-lightbox/style.css';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {signIn} from "next-auth/react";
+import {useState} from "react";
+import {useRouter} from "next/navigation"
 
 const page = () => {
-    useWowInit()
+    const router = useRouter()
+    const [error, setError] = useState('')
 
     return (
         <div className="in_main">
@@ -15,41 +19,64 @@ const page = () => {
                     </div>
                 </div>
                 <div className="contact__form auth__form">
-                    <form action="/services/lending/#wpcf7-f5-o1" method="post"
-                          className="wpcf7-form init form contact__form popup-form callback zoom-anim-dialog"
-                          noValidate="novalidate" data-status="init">
-                        <div className="wrap-inpute">
+                    <Formik
+                        initialValues={{ login: '', password: '' }}
+                        validate={values => {
+                            const errors = {};
+                            if (!values.login) {
+                                errors.login = 'Поле обязательно для заполнения';
+                            }
+                            if (!values.password) {
+                                errors.password = 'Поле обязательно для заполнения';
+                            }
+                            return errors;
+                        }}
+                        onSubmit={ async (values, { setSubmitting }) => {
+                            const {login, password} = values
+                            try {
+                                const res = await signIn('credentials', {
+                                    login, password, redirect: false
+                                })
 
-                            <div className="wrap-inpute__item">
-                                <label>
-                                    <span className="wpcf7-form-control-wrap email-101">
-                                        <input type="email"
-                                               name="email-101"
-                                               value="" size="40"
-                                               className="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email"
-                                               aria-required="true"
-                                               aria-invalid="false"/></span>
-                                    <span className="wrap-inpute__label">Ваша почта:</span>
-                                </label>
-                            </div>
-                            <div className="wrap-inpute__item">
-                                <label>
-                                    <span className="wpcf7-form-control-wrap your-name">
-                                        <input type="password"
-                                               name="password"
-                                               value="" size="40"
-                                               className="wpcf7-form-control wpcf7-text"
-                                               aria-invalid="false"/></span>
-                                    <span className="wrap-inpute__label">Пароль:</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div className="text-center">
-                            <input type="submit" value="Вход"
-                                   className="wpcf7-form-control has-spinner wpcf7-submit btn btn--red"/>
-                        </div>
-                        <div className="wpcf7-response-output" aria-hidden="true"></div>
-                    </form>
+                                if(res.error){
+                                    setError("Invalid login or password")
+                                    return
+                                }
+
+                                router.replace("/")
+
+                            } catch(e) {
+                                console.log("Error during login", e)
+                            }
+                            setSubmitting(false);
+                        }}
+                    >
+                        {({ isSubmitting }) => (
+                            <Form className="form contact__form popup-form zoom-anim-dialog">
+                                <div className="wrap-inpute">
+                                    <div className="wrap-inpute__item">
+                                        <label htmlFor="login">Login</label>
+                                        <Field type="text" name="login"/>
+                                        <ErrorMessage name="login" component="div"/>
+                                    </div>
+                                    {/*<div className="wrap-inpute__item">*/}
+                                    {/*    <label htmlFor="email">Email</label>*/}
+                                    {/*    <Field type="email" name="email"/>*/}
+                                    {/*    <ErrorMessage name="email" component="div"/>*/}
+                                    {/*</div>*/}
+                                    <div className="wrap-inpute__item">
+                                        <label htmlFor="password">Password</label>
+                                        <Field type="password" name="password"/>
+                                        <ErrorMessage name="password" component="div"/>
+                                    </div>
+                                </div>
+                                <div style={{marginTop: 40}} className="text-center">
+                                    <button type="submit" className="btn btn--red">Вход</button>
+                                </div>
+                                <div className={'text-center'}>{error}</div>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

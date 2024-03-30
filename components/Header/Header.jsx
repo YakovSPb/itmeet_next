@@ -1,11 +1,43 @@
 "use client"
 import React from 'react'
-import {items} from "../../public/Items.json";
 import {useState} from "react";
 import clsx from "clsx"
+import {signOut, useSession} from "next-auth/react";
 const Header = () => {
-    const {links} = items
+    const links = [
+        {
+            "id": 1,
+            "path": "/",
+            "label": "Главная"
+        },
+        {
+            "id": 2,
+            "path": "/services",
+            "label": "Услуги и цены"
+        },
+        {
+            "id": 3,
+            "path": "/portfolio",
+            "label": "Портфолио"
+        },
+        {
+            "id": 6,
+            "path": "/blog",
+            "label": "Статьи"
+        },
+        {
+            "id": 4,
+            "path": "/about",
+            "label": "О нас"
+        },
+        {
+            "id": 5,
+            "path": "/contacts",
+            "label": "Контакты"
+        }
+    ]
     const [toggleMenu, setToggleMenu] = useState(false)
+    const {status} = useSession()
     return (
         <header className="header">
             <div className="container">
@@ -41,6 +73,9 @@ const Header = () => {
                             <i className="fa fa-phone"></i><a
                             href="tel:+79850781496">8-985-078-14-96</a>
                         </div>
+                        {status === 'authenticated' && <div
+                            onClick={()=> signOut()}
+                            style={{marginLeft: 15, cursor: 'pointer'}}>logout</div>}
                     </div>
 
                     <div onClick={()=>setToggleMenu(!toggleMenu)} className={clsx("hamburger hamburger--emphatic", toggleMenu && 'is-active')}>

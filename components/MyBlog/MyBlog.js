@@ -1,7 +1,4 @@
-import { Carousel } from "react-responsive-carousel";
-import {items} from "../../public/Items.json";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import {useState} from "react";
 export default function MyBlog() {
 
     return (

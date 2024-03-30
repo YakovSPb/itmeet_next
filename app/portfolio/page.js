@@ -1,5 +1,4 @@
 "use client"
-import {items} from "../../public/Items.json";
 import useWowInit from "../../hooks/useWowInit";
 import {useEffect} from "react";
 import {useState} from "react";

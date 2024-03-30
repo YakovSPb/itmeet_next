@@ -1,9 +1,39 @@
 "use client"
 import React from 'react'
 import {useModal} from "../Modal/ModalProvider";
-import {items} from "../../public/Items.json";
 const Footer = () => {
-    const {links} = items
+    const links =  [
+        {
+            "id": 1,
+            "path": "/",
+            "label": "Главная"
+        },
+        {
+            "id": 2,
+            "path": "/services",
+            "label": "Услуги и цены"
+        },
+        {
+            "id": 3,
+            "path": "/portfolio",
+            "label": "Портфолио"
+        },
+        {
+            "id": 6,
+            "path": "/blog",
+            "label": "Статьи"
+        },
+        {
+            "id": 4,
+            "path": "/about",
+            "label": "О нас"
+        },
+        {
+            "id": 5,
+            "path": "/contacts",
+            "label": "Контакты"
+        }
+        ]
     const { openModal } = useModal();
     return (
         <footer className="footer">

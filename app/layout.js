@@ -6,6 +6,7 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import {ModalProvider} from "../components/Modal/ModalProvider";
 import FormModal from "../components/Modal/FormModal";
+import AuthProvider from "@/providers/AuthProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -17,12 +18,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
     <body>
     <div id="__next">
+        <AuthProvider>
         <ModalProvider>
             <FormModal />
             <Header/>
             {children}
             <Footer/>
         </ModalProvider>
+        </AuthProvider>
     </div>
     </body>
     </html>
