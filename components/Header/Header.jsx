@@ -73,12 +73,16 @@ const Header = () => {
                             <i className="fa fa-phone"></i><a
                             href="tel:+79850781496">8-985-078-14-96</a>
                         </div>
-                        {status === 'authenticated' && <div
-                            onClick={()=> signOut()}
-                            style={{marginLeft: 15, cursor: 'pointer'}}>logout</div>}
+                        {status === 'authenticated' && <div>
+                            <a style={{marginLeft: 15}} href="/write">write</a>
+                            <div
+                                onClick={() => signOut()}
+                                style={{marginLeft: 15, cursor: 'pointer'}}>logout
+                            </div>
+                        </div>}
                     </div>
 
-                    <div onClick={()=>setToggleMenu(!toggleMenu)} className={clsx("hamburger hamburger--emphatic", toggleMenu && 'is-active')}>
+                    <div onClick={() => setToggleMenu(!toggleMenu)} className={clsx("hamburger hamburger--emphatic", toggleMenu && 'is-active')}>
                         <span className="hamburger-box"><span className="hamburger-inner"></span></span>
                     </div>
 
