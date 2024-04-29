@@ -4,14 +4,85 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import {signIn} from "next-auth/react";
 import {useState} from "react";
 import {useRouter} from "next/navigation"
+import styles from "@/app/write/Write.module.css";
+import {useSnackbar} from "notistack";
 
 const page = () => {
+    const { enqueueSnackbar } = useSnackbar();
     const router = useRouter()
     const [error, setError] = useState('')
+    const [activeTab, setActiveTab] = useState(0);
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+        setError('');
+    };
+
+    const tabs = [
+        { label: 'Авторизация'},
+        { label: 'Регистрация'},
+    ];
+
+    const handleSubmit = async (values, actions) => {
+        const {login, password} = values
+
+            if (activeTab === 0) {
+                try {
+                    const res = await signIn('credentials', {
+                        login, password, redirect: false
+                    })
+
+                    if (res.error) {
+                        setError("Invalid login or password")
+                        return
+                    }
+
+                    router.replace("/")
+
+                } catch (e) {
+                    console.log("Error during login", e)
+                }
+                actions.setSubmitting(false);
+            } else if (activeTab === 1) {
+                try {
+                    const response =  await fetch('api/register',{
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            login, password
+                        })
+                    })
+                    if (response.ok) {
+                        setActiveTab(0);
+                        enqueueSnackbar('You have successfully authorized', { variant: 'success' });
+                    } else {
+                        const errorMessage = await response.text();
+                        enqueueSnackbar(errorMessage, { variant: 'error' });
+                    }
+                } catch(e) {
+                    console.log("Error during registration", e)
+                }
+                actions.setSubmitting(false);
+        }
+    };
 
     return (
         <div className="in_main">
-            <h1 className="h1 in_main__h1">Авторизация</h1>
+            <div className={styles.tabButtons}>
+                {tabs.map((tab, index) => (
+                    <button
+                        key={index}
+                        className={index === activeTab ? styles.buttonActive : ''}
+                        onClick={() => handleTabChange(index)}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </div>
+
+            <h1 className="h1 in_main__h1">{tabs[activeTab].label}</h1>
             <div className="container">
                 <div className="contact d-flex">
                     <div className="contact__info auth__info">
@@ -20,7 +91,7 @@ const page = () => {
                 </div>
                 <div className="contact__form auth__form">
                     <Formik
-                        initialValues={{ login: '', password: '' }}
+                        initialValues={{login: '', password: ''}}
                         validate={values => {
                             const errors = {};
                             if (!values.login) {
@@ -31,27 +102,9 @@ const page = () => {
                             }
                             return errors;
                         }}
-                        onSubmit={ async (values, { setSubmitting }) => {
-                            const {login, password} = values
-                            try {
-                                const res = await signIn('credentials', {
-                                    login, password, redirect: false
-                                })
-
-                                if(res.error){
-                                    setError("Invalid login or password")
-                                    return
-                                }
-
-                                router.replace("/")
-
-                            } catch(e) {
-                                console.log("Error during login", e)
-                            }
-                            setSubmitting(false);
-                        }}
+                        onSubmit={handleSubmit}
                     >
-                        {({ isSubmitting }) => (
+                        {({isSubmitting}) => (
                             <Form className="form contact__form popup-form zoom-anim-dialog">
                                 <div className="wrap-inpute">
                                     <div className="wrap-inpute__item">
@@ -71,7 +124,7 @@ const page = () => {
                                     </div>
                                 </div>
                                 <div style={{marginTop: 40}} className="text-center">
-                                    <button type="submit" className="btn btn--red">Вход</button>
+                                    <button type="submit" className="btn btn--red">{tabs[activeTab].label}</button>
                                 </div>
                                 <div className={'text-center'}>{error}</div>
                             </Form>

@@ -5,6 +5,8 @@
 }
 
 .tabButtons{
+    max-width: 300px;
+    margin: 0 auto 100px auto;
     display: flex;
     justify-content: space-between;
 }

@@ -33,6 +33,19 @@
     background-color: #087bea;
 }
 
+.tabButtons{
+    display: flex;
+    justify-content: space-between;
+}
+.tabButtons button {
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
 @media screen and(max-width: 768px){
     .wrapper{
         padding: 50px 100px;
