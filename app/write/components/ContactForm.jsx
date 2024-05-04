@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import styles from '../Write.module.css'
 import {ErrorMessage, Field, Form, Formik} from "formik";
@@ -22,26 +23,25 @@ const ContactForm = () => {
                         { item: '', icon: '', link: ''}
                     ]
             }}
-                // validate={values => {
-                //     const errors = {};
-                //     const phoneRegExp = /^8-\d{3}-\d{3}-\d{2}-\d{2}$/;
-                //     const schema = Yup.object().shape({
-                //         phone: Yup.string().matches(phoneRegExp, 'Введите корректный телефон в формате 8-XXX-XXX-XX-XX'),
-                //         email: Yup.string().email('Введите корректный email').required('Email обязателен для заполнения'),
-                //     });
-                //     try {
-                //         schema.validateSync(values, { abortEarly: false });
-                //     } catch (validationErrors) {
-                //         validationErrors.inner.forEach(error => {
-                //             errors[error.path] = error.message;
-                //         });
-                //     }
-                //     return errors;
-                // }}
+                validate={values => {
+                    const errors = {};
+                    const phoneRegExp = /^8-\d{3}-\d{3}-\d{2}-\d{2}$/;
+                    const schema = Yup.object().shape({
+                        phone: Yup.string().matches(phoneRegExp, 'Введите корректный телефон в формате 8-XXX-XXX-XX-XX'),
+                        email: Yup.string().email('Введите корректный email').required('Email обязателен для заполнения'),
+                    });
+                    try {
+                        schema.validateSync(values, { abortEarly: false });
+                    } catch (validationErrors) {
+                        validationErrors.inner.forEach(error => {
+                            errors[error.path] = error.message;
+                        });
+                    }
+                    return errors;
+                }}
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
-                        const {content} = values
-                        await instance.post('contact', {content});
+                        await instance.post('contact', {values});
                     } catch (e) {
                         console.log("Error during registration", e);
                     }
