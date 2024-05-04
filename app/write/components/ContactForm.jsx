@@ -1,27 +1,29 @@
 "use client"
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from '../Write.module.css'
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import clsx from "clsx";
 import * as Yup from 'yup';
 import instance from "/utils/axios";
+import {useContacts} from "@/providers/Context";
+import {useSnackbar} from "notistack";
 
 const ContactForm = () => {
+    const { enqueueSnackbar } = useSnackbar();
+    const { contacts } = useContacts();
+    const {content = '', phone = '', email = '', adress = '', workingHours = '', messengers = []} = contacts
+
     return (
         <div className="contact__form auth__form">
             <h3 className="h3">Контакты</h3>
             <Formik
                 initialValues={{
-                    content: '',
-                    phone: '',
-                    email: '',
-                    adress: '',
-                    workingHours: '',
-                    messengers: [
-                        { item: '', icon: '', link: ''},
-                        { item: '', icon: '', link: ''},
-                        { item: '', icon: '', link: ''}
-                    ]
+                    content,
+                    phone,
+                    email,
+                    adress,
+                    workingHours,
+                    messengers
             }}
                 validate={values => {
                     const errors = {};
@@ -41,7 +43,9 @@ const ContactForm = () => {
                 }}
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
-                        await instance.post('contact', {values});
+                        await instance[contacts ? 'put' : 'post']('contact', { values }).then(()=> {
+                            enqueueSnackbar('Contacts has been updated', { variant: 'success' });
+                        })
                     } catch (e) {
                         console.log("Error during registration", e);
                     }
@@ -80,14 +84,6 @@ const ContactForm = () => {
                                     <label htmlFor={`messengers[${index}].item`}>Item {index + 1}</label>
                                     <Field type="text" placeholder={'text'} name={`messengers[${index}].item`}/>
                                     <Field type="text" placeholder={'link'} name={`messengers[${index}].link`}/>
-                                    <input
-                                        type="file"
-                                        name={`messengers[${index}].icon`}
-                                        onChange={(event) => {
-                                            const file = event.target.files[0];
-                                            setFieldValue(`messengers[${index}].icon`, file);
-                                        }}
-                                    />
                                 </div>
                             ))}
                         </div>

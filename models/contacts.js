@@ -1,15 +1,11 @@
 import mongoose, {models, Schema} from "mongoose";
 
 const MessengerSchemaPostSchema = new Schema({
-    icon: {
+    item: {
         type: String,
         required: false,
     },
     link: {
-        type: String,
-        required: false,
-    },
-    item: {
         type: String,
         required: false,
     },
@@ -36,7 +32,7 @@ const contactsSchema = new Schema({
             type: String,
             required: false,
         },
-        messenger:[{
+        messengers:[{
                 type: MessengerSchemaPostSchema,
                 required: false,
         }],

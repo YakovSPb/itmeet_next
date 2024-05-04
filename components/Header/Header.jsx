@@ -1,8 +1,11 @@
 "use client"
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useState} from "react";
 import clsx from "clsx"
 import {signOut, useSession} from "next-auth/react";
+import {useContacts} from "@/providers/Context";
+import Link from "next/link";
+import {linkPhoneNumber} from "@/utils/linkPhoneNumber";
 const Header = () => {
     const links = [
         {
@@ -38,6 +41,30 @@ const Header = () => {
     ]
     const [toggleMenu, setToggleMenu] = useState(false)
     const {status} = useSession()
+
+    const { contacts, isLoading, setLoading, setContacts } = useContacts();
+
+    useEffect(() => {
+        const fetchContacts = async () => {
+            try {
+                setLoading(true);
+                const response = await fetch('/api/contact');
+                if (!response.ok) {
+                    throw new Error('Ошибка при загрузке контактов');
+                }
+                const data = await response.json();
+                if(data.contacts.length){
+                    setContacts(data.contacts[0]);
+                }
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
+            }
+        };
+
+        fetchContacts();
+    }, []);
+
     return (
         <header className="header">
             <div className="container">
@@ -50,7 +77,7 @@ const Header = () => {
                             {links.map(link=> (
                                 <li key={link.id}
                                     className="menu-item">
-                                    <a href={link.path} aria-current="page">{link.label}</a></li>
+                                    <Link href={link.path} aria-current="page">{link.label}</Link></li>
                             ))}
                         </ul>
                     </nav>
@@ -66,15 +93,15 @@ const Header = () => {
 
                     <div className="header_info">
                         <div className="mail">
-                            <i className="fa fa-envelope-o"></i><a
-                            href="mailto:itmeetm@gmail.com">itmeetm@gmail.com</a>
+                            <i className="fa fa-envelope-o"></i>
+                            <Link href={`mailto:${contacts?.email}`}>{contacts?.email}</Link>
                         </div>
                         <div className="phone header_phone">
-                            <i className="fa fa-phone"></i><a
-                            href="tel:+79850781496">8-985-078-14-96</a>
+                            <i className="fa fa-phone"></i>
+                            <Link href={`tel:${linkPhoneNumber(contacts?.phone)}`}>{contacts?.phone}</Link>
                         </div>
                         {status === 'authenticated' && <div>
-                            <a style={{marginLeft: 15}} href="/write">write</a>
+                            <Link style={{marginLeft: 15}} href="/write">write</Link>
                             <div
                                 onClick={() => signOut()}
                                 style={{marginLeft: 15, cursor: 'pointer'}}>logout

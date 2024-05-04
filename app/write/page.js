@@ -5,9 +5,8 @@ import {useRouter} from "next/navigation"
 import Loader from "@/components/Loader/Loader";
 import styles from './Write.module.css'
 import {useState} from "react";
-import {ErrorMessage, Field, Form, Formik} from "formik";
-import clsx from "clsx";
 import ContactForm from "@/app/write/components/ContactForm";
+import {SnackbarProvider} from "notistack";
 
 const page = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -35,6 +34,7 @@ const page = () => {
         return null;
     }
     return (
+        <SnackbarProvider maxSnack={3}>
         <div className="in_main">
             <h1 className="h1 in_main__h1">Администрирование</h1>
             <div className="container">
@@ -63,6 +63,7 @@ const page = () => {
                 </div>
             </div>
         </div>
+        </SnackbarProvider>
     )
 }
 

@@ -1,16 +1,11 @@
 import {NextResponse} from "next/server";
 import {connectMongoDB} from "@/mongodb";
-import bcrypt from "bcryptjs"
-import User from "@/models/user";
 import Contacts from "@/models/contacts";
 
 export async function  POST(req) {
     try{
         const {values} = await req.json()
         const { content, phone, email, adress, workingHours, messengers} = values
-
-        console.log('values', values)
-
         await connectMongoDB()
         await Contacts.create({
             content,
@@ -27,6 +22,30 @@ export async function  POST(req) {
     }
 }
 
+export async function PUT(req) {
+    try {
+        const { values } = await req.json();
+        const { content, phone, email, adress, workingHours, messengers } = values;
+        await connectMongoDB();
+        await Contacts.updateOne(
+            {},
+            { $set: {
+                    content,
+                    phone,
+                    email,
+                    adress,
+                    workingHours,
+                    messengers,
+                },
+            }
+        );
+
+        return NextResponse.json({ message: "Contacts updated" }, { status: 200 });
+    } catch (err) {
+        return NextResponse.json({ message: "An error occurred while updating contacts." }, { status: 500 });
+    }
+}
+
 export async function GET(req) {
     try {
         await connectMongoDB();
@@ -37,10 +56,3 @@ export async function GET(req) {
     }
 }
 
-export const fetchContacts = async () => {
-    const response = await fetch('/api/contacts');
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json();
-};

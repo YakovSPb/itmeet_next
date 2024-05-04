@@ -4,14 +4,12 @@ import PortfolioSlider from "@/components/PortfolioSlider/PortfolioSlider";
 import MyBlog from "@/components/MyBlog/MyBlog";
 import useWowInit from "../hooks/useWowInit";
 import {useModal} from "../components/Modal/ModalProvider";
-import { SnackbarProvider } from 'notistack';
 
 export default function Home() {
     useWowInit()
     const { openModal } = useModal();
 
     return <div>
-        <SnackbarProvider maxSnack={3}>
         <div className="wrapper">
             <div className="main">
                 <div className="promo">
@@ -222,6 +220,5 @@ export default function Home() {
                 <MyBlog/>
             </div>
         </div>
-        </SnackbarProvider>
     </div>;
 }

@@ -1,10 +1,13 @@
 "use client"
 import useWowInit from "../../hooks/useWowInit";
 import 'react-image-lightbox/style.css';
+import {useContacts} from "@/providers/Context";
+import {linkPhoneNumber} from "@/utils/linkPhoneNumber";
 
 const page = () => {
     useWowInit()
-
+    const { contacts } = useContacts();
+    const {content = '', phone = '', email = '', adress = '', workingHours = ''} = contacts
     return (
         <div className="in_main">
             <h1 className="h1 in_main__h1">Контакты</h1>
@@ -31,7 +34,7 @@ const page = () => {
                             <div className="contact__label">Телефон:</div>
                             <div className="contact__text">
                                 <div className="phone contact__phone">
-                                    <i className="fa fa-phone"></i><a href="tel:+79523806666">8-952-380-66-66</a>
+                                    <i className="fa fa-phone"></i><a href={`tel:${linkPhoneNumber(contacts?.phone)}`}>{phone}</a>
                                 </div>
                             </div>
                         </div>
@@ -40,18 +43,18 @@ const page = () => {
                             <div className="contact__text">
                                 <div className="mail contact__mail">
                                     <i className="fa fa-envelope-o"></i><a
-                                    href="mailto:seo@prospekt.pro">seo@prospekt.pro</a>
+                                    href={`mailto:${contacts?.email}`}>{email}</a>
                                 </div>
                             </div>
                         </div>
                         <div className="contact__item">
                             <div className="contact__label">Адрес офиса:</div>
-                            <div className="contact__text">в данное время все сотрудники работают удаленно</div>
+                            <div className="contact__text">{adress}</div>
                         </div>
 
                         <div className="contact__item">
                             <div className="contact__label">Часы работы:</div>
-                            <div className="contact__text">с 10:00 до 22:00</div>
+                            <div className="contact__text">{workingHours}</div>
                         </div>
                         <div className="contact__item">
                             <div className="contact__label">Месенджеры:</div>
